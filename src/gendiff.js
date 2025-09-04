@@ -1,5 +1,10 @@
+import { parseFile } from './parsers.js'
+
 const genDiff = (filepath1, filepath2, format = 'stylish') => {
-    return `Difference between ${filepath1} and ${filepath2} in ${format} format`
-  }
+  const data1 = parseFile(filepath1)
+  const data2 = parseFile(filepath2)
   
-  export default genDiff
+  return `File 1: ${JSON.stringify(data1, null, 2)}\nFile 2: ${JSON.stringify(data2, null, 2)}\nFormat: ${format}`
+}
+
+export default genDiff
