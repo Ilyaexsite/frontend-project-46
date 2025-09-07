@@ -1,12 +1,13 @@
 export default {
     testEnvironment: 'node',
-    extensionsToTreatAsEsm: ['.js'],
-    moduleNameMapping: {
-      '^(\\.{1,2}/.*)\\.js$': '$1',
+    transform: {
+      '^.+\\.js$': 'babel-jest',
     },
-    transform: {},
     collectCoverage: true,
     coverageDirectory: 'coverage',
     coverageProvider: 'v8',
+    testMatch: [
+      '**/__tests__/**/*.js',
+      '**/?(*.)+(spec|test).js',
+    ],
   }
-  
