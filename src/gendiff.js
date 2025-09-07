@@ -50,8 +50,8 @@ const formatValue = (value) => {
 const formatStylish = (diffItems) => {
   const lines = diffItems.map((item) => {
     const prefix = item.status === 'added' ? '  + ' :
-                  item.status === 'removed' ? '  - ' :
-                  '    '
+      item.status === 'removed' ? '  - ' :
+        '    '
     return `${prefix}${item.key}: ${formatValue(item.value)}`
   })
 
@@ -61,13 +61,13 @@ const formatStylish = (diffItems) => {
 const genDiff = (filepath1, filepath2, format = 'stylish') => {
   const data1 = parseFile(filepath1)
   const data2 = parseFile(filepath2)
-  
+
   const diffItems = buildDiff(data1, data2)
-  
+
   if (format === 'stylish') {
     return formatStylish(diffItems)
   }
-  
+
   throw new Error(`Unsupported format: ${format}`)
 }
 

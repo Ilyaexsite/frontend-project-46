@@ -13,36 +13,32 @@ describe('gendiff', () => {
   test('should compare flat JSON files correctly', () => {
     const filepath1 = getFixturePath('file1.json')
     const filepath2 = getFixturePath('file2.json')
-    
     const expected = readFile('expected.txt').trim()
     const result = genDiff(filepath1, filepath2)
-    
     expect(result).toEqual(expected)
   })
 
   test('should work with stylish format by default', () => {
     const filepath1 = getFixturePath('file1.json')
     const filepath2 = getFixturePath('file2.json')
-    
     const expected = readFile('expected.txt').trim()
     const result = genDiff(filepath1, filepath2, 'stylish')
-    
-    expect(result).toEqual(expected);
-  });
+    expect(result).toEqual(expected)
+  })
 
   test('should throw error for unsupported format', () => {
     const filepath1 = getFixturePath('file1.json')
     const filepath2 = getFixturePath('file2.json')
-    
+
     expect(() => genDiff(filepath1, filepath2, 'unknown')).toThrow('Unsupported format: unknown')
   })
 
   test('should handle identical files', () => {
     const filepath1 = getFixturePath('file1.json')
     const filepath2 = getFixturePath('file1.json')
-    
+
     const result = genDiff(filepath1, filepath2)
-    
+
     expect(result).toContain('host: hexlet.io')
     expect(result).toContain('timeout: 50')
     expect(result).not.toContain('+')

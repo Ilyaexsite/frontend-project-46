@@ -10,3 +10,12 @@ rules:
   no-console: 0
   import/extensions: 0
   no-underscore-dangle: 0
+  semi: 0
+  indent: [error, 2]
+  comma-dangle: [error, never]
+  operator-linebreak: [error, after] 
+  no-nested-ternary: 0
+  no-trailing-spaces: error
+  eol-last: [error, always]
+  no-multiple-empty-lines: [error, { max: 1 }]
+  
