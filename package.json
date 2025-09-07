@@ -20,7 +20,7 @@
   ],
   "main": "src/gendiff.js",
   "scripts": {
-    "test": "jest",
+    "test": "NODE_OPTIONS=--experimental-vm-modules npx jest",
     "lint": "eslint .",
     "test:watch": "jest --watch",
     "test-coverage": "jest --coverage --coverageProvider=v8",
@@ -34,6 +34,9 @@
     "gendiff": "./bin/gendiff.js"
   },
   "devDependencies": {
+    "@babel/core": "^7.28.4",
+    "@babel/preset-env": "^7.28.3",
+    "babel-jest": "^30.1.2",
     "eslint": "^8.57.1",
     "eslint-config-airbnb-base": "^15.0.0",
     "eslint-plugin-import": "^2.32.0",
@@ -41,5 +44,5 @@
   },
   "engines": {
     "node": ">=18.0.0"
-}
+  }
 }

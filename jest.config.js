@@ -1,7 +1,10 @@
 export default {
-  testEnvironment: 'node',
-  extensionsToTreatAsEsoModule: ['.js'],
-  moduleNameMapping: {},
-  transform: {}
-}
-
+    testEnvironment: 'node',
+    transform: {
+      '^.+\\.js$': 'babel-jest',
+    },
+    collectCoverage: true,
+    coverageDirectory: 'coverage',
+    coverageProvider: 'v8',
+  }
+  
