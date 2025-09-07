@@ -45,3 +45,4 @@ describe('gendiff', () => {
     expect(result).not.toContain('-')
   })
 })
+
