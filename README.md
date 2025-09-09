@@ -37,3 +37,19 @@ make test-coverage
 
 # Запуск в watch режиме
 npm run test:watch
+
+## Supported Formats
+- JSON (.json)
+- YAML (.yml, .yaml)
+
+## Examples
+\`\`\`bash
+# Compare two YAML files
+gendiff __fixtures__/file1.yml __fixtures__/file2.yml
+
+# Compare JSON and YAML
+gendiff __fixtures__/file1.json __fixtures__/file2.yml
+
+# Compare YAML and JSON
+gendiff __fixtures__/file1.yml __fixtures__/file2.json
+\`\`\`

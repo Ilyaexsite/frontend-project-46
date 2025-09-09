@@ -1,12 +1,5 @@
 import _ from 'lodash'
-import { readFileSync } from 'fs'
-import path from 'path'
-
-const parseFile = (filepath) => {
-  const absolutePath = path.resolve(process.cwd(), filepath)
-  const content = readFileSync(absolutePath, 'utf-8')
-  return JSON.parse(content)
-}
+import parseFile from './parsers.js'
 
 const buildDiff = (data1, data2) => {
   const allKeys = _.union(_.keys(data1), _.keys(data2))
@@ -42,7 +35,10 @@ const formatValue = (value) => {
     return value.toString()
   }
   if (_.isNull(value)) {
-    return 'null'
+    return 'null';
+  }
+  if (_.isObject(value)) {
+    return '[complex value]'
   }
   return value
 }

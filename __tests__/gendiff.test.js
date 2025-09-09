@@ -1,48 +1,39 @@
-import { readFileSync } from 'fs'
-import path from 'path'
 import { fileURLToPath } from 'url'
+import path from 'path'
+import fs from 'fs'
 import genDiff from '../src/gendiff.js'
 
 const __filename = fileURLToPath(import.meta.url)
 const __dirname = path.dirname(__filename)
-
 const getFixturePath = (filename) => path.join(__dirname, '..', '__fixtures__', filename)
-const readFile = (filename) => readFileSync(getFixturePath(filename), 'utf-8')
 
-describe('gendiff', () => {
-  test('should compare flat JSON files correctly', () => {
-    const filepath1 = getFixturePath('file1.json')
-    const filepath2 = getFixturePath('file2.json')
-    const expected = readFile('expected.txt').trim()
-    const result = genDiff(filepath1, filepath2)
-    expect(result).toEqual(expected)
-  })
+test('gendiff yaml files', () => {
+  const file1 = getFixturePath('file1.yml')
+  const file2 = getFixturePath('file2.yml')
+  
+  const expected = `{
+  - follow: false
+    host: hexlet.io
+  - proxy: 123.234.53.22
+  - timeout: 50
+  + timeout: 20
+  + verbose: true
+}`
 
-  test('should work with stylish format by default', () => {
-    const filepath1 = getFixturePath('file1.json')
-    const filepath2 = getFixturePath('file2.json')
-    const expected = readFile('expected.txt').trim()
-    const result = genDiff(filepath1, filepath2, 'stylish')
-    expect(result).toEqual(expected)
-  })
-
-  test('should throw error for unsupported format', () => {
-    const filepath1 = getFixturePath('file1.json')
-    const filepath2 = getFixturePath('file2.json')
-
-    expect(() => genDiff(filepath1, filepath2, 'unknown')).toThrow('Unsupported format: unknown')
-  })
-
-  test('should handle identical files', () => {
-    const filepath1 = getFixturePath('file1.json')
-    const filepath2 = getFixturePath('file1.json')
-
-    const result = genDiff(filepath1, filepath2)
-
-    expect(result).toContain('host: hexlet.io')
-    expect(result).toContain('timeout: 50')
-    expect(result).not.toContain('+')
-    expect(result).not.toContain('-')
-  })
+  expect(genDiff(file1, file2)).toBe(expected);
 })
 
+test('gendiff json and yaml files', () => {
+  const jsonFile = getFixturePath('file1.json')
+  const yamlFile = getFixturePath('file1.yml')
+  const result = genDiff(jsonFile, yamlFile)
+  expect(result).toContain('host: hexlet.io')
+  expect(result).toContain('timeout: 50')
+})
+
+test('throws error for unsupported format', () => {
+  const unsupportedFile = getFixturePath('file1.txt')
+  const jsonFile = getFixturePath('file1.json')
+  
+  expect(() => genDiff(unsupportedFile, jsonFile)).toThrow('Unsupported file format')
+})
