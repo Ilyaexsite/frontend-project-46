@@ -61,10 +61,8 @@ describe('gendiff', () => {
   test('should throw error for unsupported file format', () => {
     const tempFile = path.join(__dirname, '..', '__fixtures__', 'test.unsupported')
     writeFileSync(tempFile, 'test content')
-    
     expect(() => genDiff(tempFile, getFixturePath('file2.json')))
       .toThrow('Unsupported file format: unsupported')
-    
-    unlinkSync(tempFile)
+       unlinkSync(tempFile)
   })
 })

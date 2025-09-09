@@ -10,14 +10,14 @@ const parseFile = (filepath) => {
   const ext = path.extname(filepath).toLowerCase()
 
   switch (ext) {
-    case '.json':
-      return JSON.parse(content)
-    case '.yml':
-    case '.yaml':
-      return yaml.load(content)
-    default:
-      throw new Error(`Unsupported file format: ${ext.slice(1)}`)
+  case '.json':
+    return JSON.parse(content)
+  case '.yml':
+  case '.yaml':
+    return yaml.load(content)
+  default:
+    throw new Error(`Unsupported file format: ${ext.slice(1)}`)
   }
 }
 
-export { parseFile }
+export default parseFile 
