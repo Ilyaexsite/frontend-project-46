@@ -41,7 +41,7 @@ make test-coverage
 # Запуск в watch режиме
 
 ```bash
-npm run test:watch
+make run test:watch
 ```
 
 ## Supported Formats
