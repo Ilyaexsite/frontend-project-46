@@ -1,4 +1,4 @@
-import { readFileSync } from 'fs';
+import { readFileSync, writeFileSync, unlinkSync } from 'fs'
 import path from 'path'
 import { fileURLToPath } from 'url'
 import genDiff from '../src/gendiff.js'
@@ -55,12 +55,16 @@ describe('gendiff', () => {
     const filepath2 = getFixturePath('file2.yml')
     const expected = readFile('expected.txt').trim()
     const result = genDiff(filepath1, filepath2)
-    expect(result).toEqual(expected);
+    expect(result).toEqual(expected)
   })
 
   test('should throw error for unsupported file format', () => {
-    const filepath1 = getFixturePath('file1.txt')
-    const filepath2 = getFixturePath('file2.json')
-    expect(() => genDiff(filepath1, filepath2)).toThrow('Unsupported file format: txt')
+    const tempFile = path.join(__dirname, '..', '__fixtures__', 'test.unsupported')
+    writeFileSync(tempFile, 'test content')
+    
+    expect(() => genDiff(tempFile, getFixturePath('file2.json')))
+      .toThrow('Unsupported file format: unsupported')
+    
+    unlinkSync(tempFile)
   })
 })
