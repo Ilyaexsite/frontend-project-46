@@ -15,34 +15,33 @@ describe('gendiff', () => {
     const filepath2 = getFixturePath('file2.json')
     const expected = readFile('expected.txt').trim()
     const result = genDiff(filepath1, filepath2)
-    
-expect(result).toEqual(expected)
+    expect(result).toEqual(expected)
   })
 
   test('should work with stylish format by default', () => {
     const filepath1 = getFixturePath('file1.json')
     const filepath2 = getFixturePath('file2.json')
     
-  const expected = readFile('expected.txt').trim()
+const expected = readFile('expected.txt').trim()
     const result = genDiff(filepath1, filepath2, 'stylish')
     
-  expect(result).toEqual(expected)
-  })
+expect(result).toEqual(expected)
+    })
 
   test('should throw error for unsupported format', () => {
     const filepath1 = getFixturePath('file1.json')
     const filepath2 = getFixturePath('file2.json')
     
-  expect(() => genDiff(filepath1, filepath2, 'unknown')).toThrow('Unsupported format: unknown')
-  })
+expect(() => genDiff(filepath1, filepath2, 'unknown')).toThrow('Unsupported format: unknown')
+    })
 
   test('should handle identical files', () => {
     const filepath1 = getFixturePath('file1.json')
     const filepath2 = getFixturePath('file1.json')
     
-  const result = genDiff(filepath1, filepath2)
-    
-  expect(result).toContain('host: hexlet.io')
+const result = genDiff(filepath1, filepath2)
+      
+expect(result).toContain('host: hexlet.io')
     expect(result).toContain('timeout: 50')
     expect(result).not.toContain('+')
     expect(result).not.toContain('-')
@@ -52,26 +51,26 @@ expect(result).toEqual(expected)
     const filepath1 = getFixturePath('file1.yml')
     const filepath2 = getFixturePath('file2.yml')
     
-  const expected = readFile('expected.txt').trim()
+const expected = readFile('expected.txt').trim()
     const result = genDiff(filepath1, filepath2)
     
-  expect(result).toEqual(expected)
-  })
+expect(result).toEqual(expected)
+    })
 
   test('should compare YAML and JSON files correctly', () => {
     const filepath1 = getFixturePath('file1.json')
     const filepath2 = getFixturePath('file2.yml')
     
-  const expected = readFile('expected.txt').trim()
+const expected = readFile('expected.txt').trim()
     const result = genDiff(filepath1, filepath2)
     
-  expect(result).toEqual(expected)
-  })
+expect(result).toEqual(expected)
+    })
 
   test('should throw error for unsupported file format', () => {
     const filepath1 = getFixturePath('file1.txt')
     const filepath2 = getFixturePath('file2.json')
     
-  expect(() => genDiff(filepath1, filepath2)).toThrow('Unsupported file format: txt')
-  })
+expect(() => genDiff(filepath1, filepath2)).toThrow('Unsupported file format: txt')
+    })
 })
