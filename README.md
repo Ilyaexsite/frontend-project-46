@@ -29,7 +29,7 @@ make test
 ## link proj
 
 ```bash
-npm link
+make link
 ```
 
 # Запуск тестов с покрытием
