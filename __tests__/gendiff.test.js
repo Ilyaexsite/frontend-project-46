@@ -63,6 +63,6 @@ describe('gendiff', () => {
     writeFileSync(tempFile, 'test content')
     expect(() => genDiff(tempFile, getFixturePath('file2.json')))
       .toThrow('Unsupported file format: unsupported')
-       unlinkSync(tempFile)
+    unlinkSync(tempFile)
   })
 })
