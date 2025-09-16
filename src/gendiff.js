@@ -12,33 +12,31 @@ const formatValue = (value, depth = 0) => {
     return value
   }
 
-  const indent = '  '.repeat(depth * 2)
+  const indent = '    '.repeat(depth)
   const lines = Object.entries(value).map(([key, val]) => {
     const formattedValue = formatValue(val, depth + 1)
-    return `${indent}  ${key}: ${formattedValue}`
+    return `${indent}    ${key}: ${formattedValue}`
   })
 
   return `{\n${lines.join('\n')}\n${indent}}`
 }
 
-const formatStylish = (diff, depth = 1) => {
-  const indent = '  '.repeat(depth * 2 - 2)
+const formatStylish = (diff, depth = 0) => {
+  const indent = '    '.repeat(depth)
   const lines = diff.map((item) => {
     const { key, status } = item
-
     if (status === 'nested') {
       const nestedContent = formatStylish(item.children, depth + 1)
-      return `${indent}  ${key}: ${nestedContent}`
+      return `${indent}    ${key}: ${nestedContent}`
     }
-
     const value = formatValue(item.value, depth)
-    const prefix = status === 'added' ? '+ ' :
-      status === 'removed' ? '- ' : '  '
+    const prefix = status === 'added' ? '  + ' :
+                  status === 'removed' ? '  - ' : '    '
 
     return `${indent}${prefix}${key}: ${value}`
   })
 
-  return `{\n${lines.join('\n')}\n${'  '.repeat(depth * 2 - 2)}}`
+  return `{\n${lines.join('\n')}\n${indent}}`
 }
 
 const buildDiff = (data1, data2) => {
