@@ -31,7 +31,7 @@ const formatStylish = (diff, depth = 0) => {
     }
     const value = formatValue(item.value, depth)
     const prefix = status === 'added' ? '  + ' :
-                  status === 'removed' ? '  - ' : '    '
+      status === 'removed' ? '  - ' : '    '
 
     return `${indent}${prefix}${key}: ${value}`
   })
