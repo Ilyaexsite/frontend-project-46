@@ -94,7 +94,7 @@ describe('gendiff', () => {
     const filepath1 = getFixturePath('file1_nested.json')
     const filepath2 = getFixturePath('file1_nested.json')
     const result = genDiff(filepath1, filepath2)
-    
+
     expect(result).toContain('common: {')
     expect(result).toContain('group1: {')
     expect(result).toContain('group2: {')
