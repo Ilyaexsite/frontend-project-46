@@ -20,7 +20,7 @@ const buildDiff = (data1, data2) => {
       return {
         key,
         type: 'nested',
-        children: buildDiff(value1, value2),
+        children: buildDiff(value1, value2)
       }
     }
 
@@ -32,7 +32,7 @@ const buildDiff = (data1, data2) => {
       key,
       type: 'changed',
       oldValue: value1,
-      newValue: value2,
+      newValue: value2
     }
   })
 }
