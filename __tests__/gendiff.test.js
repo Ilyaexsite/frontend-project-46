@@ -65,7 +65,7 @@ describe('gendiff', () => {
       .toThrow('Unsupported file format: unsupported')
     unlinkSync(tempFile)
   })
-  
+
   test('should compare nested JSON files correctly', () => {
     const filepath1 = getFixturePath('file1_nested.json')
     const filepath2 = getFixturePath('file2_nested.json')
