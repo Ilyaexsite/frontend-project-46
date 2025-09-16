@@ -1,4 +1,5 @@
 common:
+  follow: true
   setting1: Value 1
   setting2: 200
   setting3: true
@@ -14,4 +15,6 @@ group1:
 group2:
   abc: 12345
   deep:
-    id: 45
+    id:
+      number: 45
+      
