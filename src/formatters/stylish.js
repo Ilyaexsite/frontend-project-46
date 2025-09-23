@@ -15,9 +15,9 @@ const formatValue = (value, depth) => {
   const currentIndent = ' '.repeat(depth * indentSize)
   const bracketIndent = ' '.repeat((depth - 1) * indentSize)
 
-  const lines = Object.entries(value).map(([key, val]) => {
-    return `${currentIndent}${key}: ${formatValue(val, depth + 1)}`
-  })
+  const lines = Object.entries(value).map(([key, val]) => 
+    `${currentIndent}${key}: ${formatValue(val, depth + 1)}`
+  )
 
   return ['{', ...lines, `${bracketIndent}}`].join('\n')
 }
@@ -30,7 +30,7 @@ const formatStylish = (diff, depth = 1) => {
   const lines = diff.map((item) => {
     const { key, status } = item
 
-  switch (status) {
+    switch (status) {
     case 'nested': {
       const nestedContent = formatStylish(item.children, depth + 1)
       return `${currentIndent}  ${key}: ${nestedContent}`
@@ -62,10 +62,10 @@ const formatStylish = (diff, depth = 1) => {
 
     default:
       throw new Error(`Unknown status: ${status}`)
-  }
-})
+    }
+  })
 
-return ['{', ...lines, `${bracketIndent}}`].join('\n')
+  return ['{', ...lines, `${bracketIndent}}`].join('\n')
 }
 
 export default formatStylish
