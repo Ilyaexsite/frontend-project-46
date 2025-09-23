@@ -48,7 +48,6 @@ const formatToJson = (diff) => {
         status: 'nested',
         children: children.flatMap((child) => formatNode(child))
       }
-   
     default:
       throw new Error(`Unknown status: ${status}`)
     }
