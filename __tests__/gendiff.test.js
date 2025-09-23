@@ -48,7 +48,7 @@ describe('gendiff', () => {
 
   test('should compare flat YAML files correctly', () => {
     const filepath1 = getFixturePath('file1_flat.yaml')
-    const filepath2 = getFixturePath('file2_flat.yaml')
+    const filepath2 = getFixturePath('file2_flat.yml')
 
     const result = genDiff(filepath1, filepath2)
     expect(result).toContain('follow')
@@ -58,7 +58,7 @@ describe('gendiff', () => {
 
   test('should compare YAML and JSON files correctly', () => {
     const filepath1 = getFixturePath('file1_flat.json')
-    const filepath2 = getFixturePath('file2_flat.yaml')
+    const filepath2 = getFixturePath('file2_flat.yml')
 
     const result = genDiff(filepath1, filepath2)
     expect(result).toBeDefined()
