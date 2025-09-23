@@ -47,7 +47,7 @@ describe('gendiff', () => {
   })
 
   test('should compare flat YAML files correctly', () => {
-    const filepath1 = getFixturePath('file1_flat.YAML')
+    const filepath1 = getFixturePath('file1_flat.yml')
     const filepath2 = getFixturePath('file2_flat.yml')
 
     const result = genDiff(filepath1, filepath2)
