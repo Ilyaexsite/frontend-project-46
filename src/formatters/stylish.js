@@ -8,36 +8,57 @@ const formatValue = (value, depth = 0) => {
     return 'null'
   }
   if (!_.isPlainObject(value)) {
-    return value
+    return String(value)
   }
 
-  const indent = '  '.repeat(depth)
+  const indent = '    '.repeat(depth + 1)
+  const bracketIndent = '    '.repeat(depth)
   const lines = Object.entries(value).map(([key, val]) => {
     const formattedValue = formatValue(val, depth + 1)
-    return `${indent}  ${key}: ${formattedValue}`
+    return `${indent}${key}: ${formattedValue}`
   })
 
-  return `{\n${lines.join('\n')}\n${indent}}`
+  return `{\n${lines.join('\n')}\n${bracketIndent}}`
 }
 
 const formatStylish = (diff, depth = 0) => {
-  const indent = '  '.repeat(depth)
+  const indent = '    '.repeat(depth)
+  const bracketIndent = '    '.repeat(depth)
+
   const lines = diff.map((item) => {
     const { key, status } = item
 
-    if (status === 'nested') {
-      const nestedContent = formatStylish(item.children, depth + 1)
-      return `${indent}  ${key}: ${nestedContent}`
+    switch (status) {
+      case 'nested':
+        const nestedContent = formatStylish(item.children, depth + 1)
+        return `${indent}  ${key}: ${nestedContent}`
+
+      case 'added':
+        const addedValue = formatValue(item.value, depth + 1)
+        return `${indent}+ ${key}: ${addedValue}`
+
+      case 'removed':
+        const removedValue = formatValue(item.value, depth + 1)
+        return `${indent}- ${key}: ${removedValue}`
+
+      case 'updated':
+        const oldValue = formatValue(item.oldValue, depth + 1)
+        const newValue = formatValue(item.value, depth + 1)
+        return [
+          `${indent}- ${key}: ${oldValue}`,
+          `${indent}+ ${key}: ${newValue}`
+        ].join('\n')
+
+      case 'unchanged':
+        const unchangedValue = formatValue(item.value, depth + 1)
+        return `${indent}  ${key}: ${unchangedValue}`
+
+      default:
+        throw new Error(`Unknown status: ${status}`)
     }
-
-    const value = formatValue(item.value, depth)
-    const prefix = status === 'added' ? '+ ' :
-      status === 'removed' ? '- ' : '  '
-
-    return `${indent}${prefix}${key}: ${value}`
   })
 
-  return `{\n${lines.join('\n')}\n${indent}}`
+  return `{\n${lines.join('\n')}\n${bracketIndent}}`
 }
 
 export default formatStylish
