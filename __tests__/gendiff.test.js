@@ -116,3 +116,39 @@ describe('gendiff', () => {
     expect(result).toContain('number: 45')
   })
 })
+
+describe('gendiff plain format', () => {
+  test('should format flat files in plain format', () => {
+    const filepath1 = getFixturePath('file1_flat.json')
+    const filepath2 = getFixturePath('file2_flat.json')
+    const result = genDiff(filepath1, filepath2, 'plain')
+    expect(result).toContain("Property 'follow' was removed")
+    expect(result).toContain("Property 'timeout' was updated. From 50 to 20")
+    expect(result).toContain("Property 'verbose' was added with value: true")
+  })
+
+  test('should format nested files in plain format', () => {
+    const filepath1 = getFixturePath('file1_nested.json')
+    const filepath2 = getFixturePath('file2_nested.json')
+    const result = genDiff(filepath1, filepath2, 'plain')
+
+    expect(result).toContain("Property 'common.follow' was updated. From true to false")
+    expect(result).toContain("Property 'common.setting2' was removed")
+    expect(result).toContain("Property 'common.setting3' was updated. From true to null")
+    expect(result).toContain("Property 'common.setting4' was added with value: 'blah blah'")
+    expect(result).toContain("Property 'common.setting5' was added with value: [complex value]")
+    expect(result).toContain("Property 'common.setting6.doge.wow' was updated. From '' to 'so much'")
+    expect(result).toContain("Property 'common.setting6.ops' was added with value: 'vops'")
+    expect(result).toContain("Property 'group1.baz' was updated. From 'bas' to 'bars'")
+    expect(result).toContain("Property 'group1.nest' was updated. From [complex value] to 'str'")
+    expect(result).toContain("Property 'group2' was removed")
+    expect(result).toContain("Property 'group3' was added with value: [complex value]")
+  })
+
+  test('should throw error for unknown format', () => {
+    const filepath1 = getFixturePath('file1_flat.json')
+    const filepath2 = getFixturePath('file2_flat.json')
+
+    expect(() => genDiff(filepath1, filepath2, 'unknown')).toThrow('Unsupported format: unknown')
+  })
+})

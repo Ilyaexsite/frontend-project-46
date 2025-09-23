@@ -1,6 +1,6 @@
 import _ from 'lodash'
 import parseFile from './parsers.js'
-import formatStylish from './formatters/stylish.js'
+import getFormatter from './formatters/index.js'
 
 const buildDiff = (data1, data2) => {
   const allKeys = _.union(_.keys(data1), _.keys(data2))
@@ -32,10 +32,12 @@ const buildDiff = (data1, data2) => {
       }
     }
 
-    return [
-      { key, value: value1, status: 'removed' },
-      { key, value: value2, status: 'added' }
-    ]
+    return {
+      key,
+      value: value2,
+      oldValue: value1,
+      status: 'updated'
+    }
   })
 }
 
@@ -44,12 +46,9 @@ const genDiff = (filepath1, filepath2, format = 'stylish') => {
   const data2 = parseFile(filepath2)
 
   const diff = buildDiff(data1, data2)
+  const formatter = getFormatter(format)
 
-  if (format === 'stylish') {
-    return formatStylish(diff)
-  }
-
-  throw new Error(`Unsupported format: ${format}`)
+  return formatter(diff)
 }
 
 export default genDiff

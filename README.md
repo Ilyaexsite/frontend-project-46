@@ -52,15 +52,19 @@ make run test:watch
 
 # Compare two YAML files
 ```bash
-gendiff __fixtures__/file1.yaml __fixtures__/file2.yaml
+gendiff __fixtures__/filepath1.yaml __fixtures__/filepath2.yaml
 ```
 
 # Compare JSON and YAML
 ```bash
-gendiff __fixtures__/file1.json __fixtures__/file2.yaml
+gendiff __fixtures__/filepath1.json __fixtures__/filepath2.yaml
 ```
 
 # Compare YAML and JSON
 ```bash
-gendiff __fixtures__/file1.yaml __fixtures__/file2.json
+gendiff __fixtures__/file1_nested.yaml __fixtures__/file2_nested.json
 ```
+
+## JSON Output Example
+```bash
+gendiff --format json __fixtures__/filepath1.json __fixtures__/filepath2.json
