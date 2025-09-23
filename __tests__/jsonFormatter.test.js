@@ -9,8 +9,8 @@ const getFixturePath = (filename) => path.join(__dirname, '..', '__fixtures__', 
 
 describe('JSON formatter', () => {
   test('should format flat files to valid JSON', () => {
-    const file1 = getFixturePath('file1.json')
-    const file2 = getFixturePath('file2.json')
+    const file1 = getFixturePath('file1_flat.json')
+    const file2 = getFixturePath('file2_flat.json')
 
     const result = genDiff(file1, file2, 'json')
 
@@ -40,8 +40,8 @@ describe('JSON formatter', () => {
   })
 
   test('should include oldValue for updated items', () => {
-    const file1 = getFixturePath('file1.json')
-    const file2 = getFixturePath('file2.json')
+    const file1 = getFixturePath('file1_flat.json')
+    const file2 = getFixturePath('file2_flat.json')
 
     const result = genDiff(file1, file2, 'json')
     const parsed = JSON.parse(result)
@@ -54,8 +54,8 @@ describe('JSON formatter', () => {
   })
 
   test('should produce different output for different formats', () => {
-    const file1 = getFixturePath('file1.json')
-    const file2 = getFixturePath('file2.json')
+    const file1 = getFixturePath('file1_flat.json')
+    const file2 = getFixturePath('file2_flat.json')
 
     const jsonResult = genDiff(file1, file2, 'json')
     const stylishResult = genDiff(file1, file2, 'stylish')
