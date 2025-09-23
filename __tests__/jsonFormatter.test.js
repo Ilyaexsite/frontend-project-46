@@ -27,13 +27,13 @@ describe('JSON formatter', () => {
   })
 
   test('should handle nested structures correctly', () => {
-    const file1 = getFixturePath('nested1.json')
-    const file2 = getFixturePath('nested2.json')
+    const file1 = getFixturePath('file1_nested.json')
+    const file2 = getFixturePath('file2_nested.json')
 
     const result = genDiff(file1, file2, 'json')
     const parsed = JSON.parse(result)
 
-    const nestedItem = parsed.find(item => item.status === 'nested')
+    const nestedItem = parsed.find((item) => item.status === 'nested')
     expect(nestedItem).toBeDefined()
     expect(nestedItem).toHaveProperty('children')
     expect(Array.isArray(nestedItem.children)).toBe(true)
@@ -46,7 +46,7 @@ describe('JSON formatter', () => {
     const result = genDiff(file1, file2, 'json')
     const parsed = JSON.parse(result)
 
-    const updatedItem = parsed.find(item => item.status === 'updated')
+    const updatedItem = parsed.find((item) => item.status === 'updated')
     if (updatedItem) {
       expect(updatedItem).toHaveProperty('oldValue')
       expect(updatedItem).toHaveProperty('value')

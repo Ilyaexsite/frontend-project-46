@@ -1,38 +1,62 @@
-const formatJson = (diff) => {
- const formatNode = (node) => {
-      if (node.status === 'nested') {
-        return {
-          key: node.key,
-          status: node.status,
-          children: node.children.map(formatNode)
-        }
+const formatToJson = (diff) => {
+    const formatValue = (value) => {
+      if (value === null) return null
+      if (typeof value === 'object' && !Array.isArray(value)) {
+        return '[complex value]'
       }
-
-      const baseNode = {
-        key: node.key,
-        status: node.status
-      }
-
-      switch (node.status) {
+      return value
+    }
+  
+    const formatNode = (node) => {
+      const {
+        key, status, value, oldValue, children,
+      } = node
+  
+      switch (status) {
         case 'added':
-          return { ...baseNode, value: node.value }
+          return {
+            key,
+            status: 'added',
+            value: formatValue(value),
+          }
+        
         case 'removed':
-          return { ...baseNode, value: node.value }
+          return {
+            key,
+            status: 'removed',
+            value: formatValue(value),
+          }
+        
         case 'unchanged':
-          return { ...baseNode, value: node.value }
+          return {
+            key,
+            status: 'unchanged',
+            value: formatValue(value),
+          }
+        
         case 'updated':
           return {
-            ...baseNode,
-            oldValue: node.oldValue,
-            value: node.value
+            key,
+            status: 'updated',
+            oldValue: formatValue(oldValue),
+            value: formatValue(value),
           }
+        
+        case 'nested':
+          return {
+            key,
+            status: 'nested',
+            children: children.flatMap((child) => formatNode(child)),
+          }
+        
         default:
-          throw new Error(`Unknown node status: ${node.status}`)
+          throw new Error(`Unknown status: ${status}`)
       }
     }
-
-    const formattedDiff = diff.map(formatNode)
-    return JSON.stringify(formattedDiff, null, 2)
+  
+    const jsonOutput = diff.flatMap((node) => formatNode(node))
+    return JSON.stringify(jsonOutput, null, 2)
   }
-
-export default formatJson
+  
+  export default formatToJson
+  
