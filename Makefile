@@ -1,18 +1,16 @@
+install:
+	npm ci
+
 test:
-	npx jest
+	npm test
 
 test-coverage:
-	npx jest --coverage --coverageProvider=v8
+	npm test -- --coverage --coverageProvider=v8
 
 lint:
 	npx eslint .
 
-lint-fix:
-	npx eslint --fix .
-
-install:
-	npm install
-
 publish:
-	npm publish --dry-run
-	
+	npm publish
+
+.PHONY: test
