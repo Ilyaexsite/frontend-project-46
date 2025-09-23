@@ -18,21 +18,21 @@ const formatToJson = (diff) => {
         key,
         status: 'added',
         value: formatValue(value)
-        }
+      }
 
     case 'removed':
       return {
         key,
         status: 'removed',
         value: formatValue(value)
-        }
+      }
 
     case 'unchanged':
       return {
         key,
         status: 'unchanged',
         value: formatValue(value)
-        }
+      }
 
     case 'updated':
       return {
@@ -40,14 +40,14 @@ const formatToJson = (diff) => {
         status: 'updated',
         oldValue: formatValue(oldValue),
         value: formatValue(value)
-        }
+      }
 
     case 'nested':
       return {
         key,
         status: 'nested',
         children: children.flatMap((child) => formatNode(child))
-        }
+      }
     default:
       throw new Error(`Unknown status: ${status}`)
     }
