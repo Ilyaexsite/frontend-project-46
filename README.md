@@ -14,6 +14,10 @@
     Node.js (версия 18 или выше)
     npm v9+
 
+## Supported Formats
+- JSON (.json)
+- YAML (.yml, .yaml)
+
 ## Установка
 
 ```bash
@@ -44,20 +48,21 @@ make test-coverage
 make run test:watch
 ```
 
-## Supported Formats
-- JSON (.json)
-- YAML (.yml, .yaml)
+# Вывод справки
+```bash
+gendiff -h
+```
 
 ## Examples
 
 # Compare two YAML files
 ```bash
-gendiff __fixtures__/file1_flat.yaml __fixtures__/file2_flat.yaml
+gendiff __fixtures__/file1_flat.yml __fixtures__/file2_flat.yml
 ```
 
 # Compare JSON and YAML
 ```bash
-gendiff __fixtures__/file1_flat.json __fixtures__/file2_flat.yaml
+gendiff __fixtures__/file1_flat.json __fixtures__/file2_flat.yml
 ```
 
 # Compare YAML and JSON
