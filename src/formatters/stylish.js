@@ -1,6 +1,6 @@
 import _ from 'lodash'
 
-const formatValue = (value, depth = 0) => {
+const formatValue = (value, depth) => {
   if (_.isBoolean(value)) {
     return value.toString()
   }
@@ -11,54 +11,61 @@ const formatValue = (value, depth = 0) => {
     return String(value)
   }
 
-  const indent = '    '.repeat(depth + 1)
-  const bracketIndent = '    '.repeat(depth)
+  const indentSize = 4
+  const currentIndent = ' '.repeat(depth * indentSize)
+  const bracketIndent = ' '.repeat((depth - 1) * indentSize)
+
   const lines = Object.entries(value).map(([key, val]) => {
-    const formattedValue = formatValue(val, depth + 1)
-    return `${indent}${key}: ${formattedValue}`
+    return `${currentIndent}${key}: ${formatValue(val, depth + 1)}`
   })
 
-  return `{\n${lines.join('\n')}\n${bracketIndent}}`
+  return ['{', ...lines, `${bracketIndent}}`].join('\n')
 }
 
-const formatStylish = (diff, depth = 0) => {
-  const indent = '    '.repeat(depth)
-  const bracketIndent = '    '.repeat(depth)
+const formatStylish = (diff, depth = 1) => {
+  const indentSize = 4
+  const currentIndent = ' '.repeat(depth * indentSize - 2)
+  const bracketIndent = ' '.repeat((depth - 1) * indentSize)
 
   const lines = diff.map((item) => {
     const { key, status } = item
 
-    switch (status) {
-    case 'nested':
+  switch (status) {
+    case 'nested': {
       const nestedContent = formatStylish(item.children, depth + 1)
-      return `${indent}  ${key}: ${nestedContent}`
+      return `${currentIndent}  ${key}: ${nestedContent}`
+    }
 
-    case 'added':
-      const addedValue = formatValue(item.value, depth + 1)
-      return `${indent}+ ${key}: ${addedValue}`
+    case 'added': {
+      const value = formatValue(item.value, depth + 1)
+      return `${currentIndent}+ ${key}: ${value}`
+    }
 
-    case 'removed':
-      const removedValue = formatValue(item.value, depth + 1)
-      return `${indent}- ${key}: ${removedValue}`
+    case 'removed': {
+      const value = formatValue(item.value, depth + 1)
+      return `${currentIndent}- ${key}: ${value}`
+    }
 
-    case 'updated':
+    case 'updated': {
       const oldValue = formatValue(item.oldValue, depth + 1)
       const newValue = formatValue(item.value, depth + 1)
       return [
-        `${indent}- ${key}: ${oldValue}`,
-        `${indent}+ ${key}: ${newValue}`
+        `${currentIndent}- ${key}: ${oldValue}`,
+        `${currentIndent}+ ${key}: ${newValue}`
       ].join('\n')
+    }
 
-    case 'unchanged':
-      const unchangedValue = formatValue(item.value, depth + 1)
-      return `${indent}  ${key}: ${unchangedValue}`
+    case 'unchanged': {
+      const value = formatValue(item.value, depth + 1)
+      return `${currentIndent}  ${key}: ${value}`
+    }
 
     default:
       throw new Error(`Unknown status: ${status}`)
-    }
-  })
+  }
+})
 
-  return `{\n${lines.join('\n')}\n${bracketIndent}}`
+return ['{', ...lines, `${bracketIndent}}`].join('\n')
 }
 
 export default formatStylish
