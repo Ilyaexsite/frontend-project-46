@@ -47,8 +47,8 @@ describe('gendiff', () => {
   })
 
   test('should compare flat YAML files correctly', () => {
-    const filepath1 = getFixturePath('file1_flat.yaml')
-    const filepath2 = getFixturePath('file2_flat.yml')
+    const filepath1 = getFixturePath('file1_flat.YAML')
+    const filepath2 = getFixturePath('file2_flat.YML')
 
     const result = genDiff(filepath1, filepath2)
     expect(result).toContain('follow')
@@ -78,8 +78,8 @@ describe('gendiff', () => {
   })
 
   test('should compare nested YAML files correctly', () => {
-    const filepath1 = getFixturePath('file1_nested.yaml')
-    const filepath2 = getFixturePath('file2_nested.yaml')
+    const filepath1 = getFixturePath('file1_nested.YAML')
+    const filepath2 = getFixturePath('file2_nested.YAML')
 
     const result = genDiff(filepath1, filepath2)
     expect(result).toContain('common')
@@ -89,7 +89,7 @@ describe('gendiff', () => {
 
   test('should compare mixed nested formats correctly', () => {
     const filepath1 = getFixturePath('file1_nested.json')
-    const filepath2 = getFixturePath('file2_nested.yaml')
+    const filepath2 = getFixturePath('file2_nested.YAML')
 
     const result = genDiff(filepath1, filepath2)
     expect(result).toBeDefined()
