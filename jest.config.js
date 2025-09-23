@@ -1,9 +1,13 @@
 export default {
   testEnvironment: 'node',
+  collectCoverageFrom: [
+    'src/**/*.js',
+  ],
   transform: {
-    '^.+\\.js$': 'babel-jest'
+    '^.+\\.js$': 'babel-jest',
   },
-  collectCoverage: true,
-  coverageDirectory: 'coverage',
-  coverageProvider: 'v8'
+  moduleNameMapping: {
+    '^(\\.{1,2}/.*)\\.js$': '$1',
+  },
+  extensionsToTreatAsEsm: ['.js'],
 }
