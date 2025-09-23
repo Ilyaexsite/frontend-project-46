@@ -152,3 +152,26 @@ describe('gendiff plain format', () => {
     expect(() => genDiff(filepath1, filepath2, 'unknown')).toThrow('Unsupported format: unknown')
   })
 })
+describe('gendiff json format', () => {
+  test('should format files in json format', () => {
+    const filepath1 = getFixturePath('file1_flat.json')
+    const filepath2 = getFixturePath('file2_flat.json')
+    
+    const result = genDiff(filepath1, filepath2, 'json')
+    
+    expect(() => JSON.parse(result)).not.toThrow()
+    const parsed = JSON.parse(result)
+    expect(Array.isArray(parsed)).toBe(true)
+  })
+
+  test('should format nested files in json format', () => {
+    const filepath1 = getFixturePath('file1_nested.json')
+    const filepath2 = getFixturePath('file2_nested.json')
+    
+    const result = genDiff(filepath1, filepath2, 'json')
+    
+    expect(() => JSON.parse(result)).not.toThrow()
+    const parsed = JSON.parse(result)
+    expect(Array.isArray(parsed)).toBe(true)
+  })
+})
