@@ -29,32 +29,32 @@ const formatStylish = (diff, depth = 0) => {
     const { key, status } = item
 
     switch (status) {
-      case 'nested':
-        const nestedContent = formatStylish(item.children, depth + 1)
-        return `${indent}  ${key}: ${nestedContent}`
+    case 'nested':
+      const nestedContent = formatStylish(item.children, depth + 1)
+      return `${indent}  ${key}: ${nestedContent}`
 
-      case 'added':
-        const addedValue = formatValue(item.value, depth + 1)
-        return `${indent}+ ${key}: ${addedValue}`
+    case 'added':
+      const addedValue = formatValue(item.value, depth + 1)
+      return `${indent}+ ${key}: ${addedValue}`
 
-      case 'removed':
-        const removedValue = formatValue(item.value, depth + 1)
-        return `${indent}- ${key}: ${removedValue}`
+    case 'removed':
+      const removedValue = formatValue(item.value, depth + 1)
+      return `${indent}- ${key}: ${removedValue}`
 
-      case 'updated':
-        const oldValue = formatValue(item.oldValue, depth + 1)
-        const newValue = formatValue(item.value, depth + 1)
-        return [
-          `${indent}- ${key}: ${oldValue}`,
-          `${indent}+ ${key}: ${newValue}`
-        ].join('\n')
+    case 'updated':
+      const oldValue = formatValue(item.oldValue, depth + 1)
+      const newValue = formatValue(item.value, depth + 1)
+      return [
+        `${indent}- ${key}: ${oldValue}`,
+        `${indent}+ ${key}: ${newValue}`
+      ].join('\n')
 
-      case 'unchanged':
-        const unchangedValue = formatValue(item.value, depth + 1)
-        return `${indent}  ${key}: ${unchangedValue}`
+    case 'unchanged':
+      const unchangedValue = formatValue(item.value, depth + 1)
+      return `${indent}  ${key}: ${unchangedValue}`
 
-      default:
-        throw new Error(`Unknown status: ${status}`)
+    default:
+      throw new Error(`Unknown status: ${status}`)
     }
   })
 
