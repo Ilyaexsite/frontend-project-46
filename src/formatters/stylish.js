@@ -54,7 +54,7 @@ const formatStylish = (diff, depth = 1) => {
           `${currentIndent}+ ${key}: ${newValue}`,
         ].join('\n')
       }
- 
+
       case 'unchanged': {
         const value = formatValue(item.value, depth + 1)
         return `${currentIndent}  ${key}: ${value}`
