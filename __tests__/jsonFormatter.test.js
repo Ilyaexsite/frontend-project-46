@@ -5,7 +5,7 @@ import genDiff from '../src/gendiff.js'
 const __filename = fileURLToPath(import.meta.url)
 const __dirname = path.dirname(__filename)
 
-const getFixturePath = (filename) => path.join(__dirname, '..', '__fixtures__', filename)
+const getFixturePath = filename => path.join(__dirname, '..', '__fixtures__', filename)
 
 describe('JSON formatter', () => {
   test('should format flat files to valid JSON', () => {
@@ -33,7 +33,7 @@ describe('JSON formatter', () => {
     const result = genDiff(file1, file2, 'json')
     const parsed = JSON.parse(result)
 
-    const nestedItem = parsed.find((item) => item.status === 'nested')
+    const nestedItem = parsed.find(item => item.status === 'nested')
     expect(nestedItem).toBeDefined()
     expect(nestedItem).toHaveProperty('children')
     expect(Array.isArray(nestedItem.children)).toBe(true)
@@ -46,7 +46,7 @@ describe('JSON formatter', () => {
     const result = genDiff(file1, file2, 'json')
     const parsed = JSON.parse(result)
 
-    const updatedItem = parsed.find((item) => item.status === 'updated')
+    const updatedItem = parsed.find(item => item.status === 'updated')
     if (updatedItem) {
       expect(updatedItem).toHaveProperty('oldValue')
       expect(updatedItem).toHaveProperty('value')

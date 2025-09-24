@@ -2,7 +2,7 @@ import { readFileSync } from 'fs'
 import path from 'path'
 import yaml from 'js-yaml'
 
-const getAbsolutePath = (filepath) => path.resolve(process.cwd(), filepath)
+const getAbsolutePath = filepath => path.resolve(process.cwd(), filepath)
 
 const parseFile = (filepath) => {
   const absolutePath = getAbsolutePath(filepath)
@@ -10,13 +10,13 @@ const parseFile = (filepath) => {
   const ext = path.extname(filepath).toLowerCase()
 
   switch (ext) {
-  case '.json':
+    case '.json':
     return JSON.parse(content)
-  case '.yml':
-  case '.yaml':
-    return yaml.load(content)
-  default:
-    throw new Error(`Unsupported file format: ${ext.slice(1)}`)
+    case '.yml':
+    case '.yaml':
+      return yaml.load(content)
+    default:
+      throw new Error(`Unsupported file format: ${ext.slice(1)}`)
   }
 }
 

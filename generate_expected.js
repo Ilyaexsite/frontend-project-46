@@ -6,7 +6,7 @@ import genDiff from './src/gendiff.js'
 const __filename = fileURLToPath(import.meta.url)
 const __dirname = path.dirname(__filename)
 
-const getFixturePath = (filename) => path.join(__dirname, '__fixtures__', filename)
+const getFixturePath = filename => path.join(__dirname, '__fixtures__', filename)
 
 const flat1 = getFixturePath('file1_flat.json')
 const flat2 = getFixturePath('file2_flat.json')
